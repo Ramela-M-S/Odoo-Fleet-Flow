@@ -18,28 +18,28 @@
 ## 🖼️ **Screenshots**
 
 ### **🔑 Login**
-![Login Page](images/login.png)
+![Login Page](main/static/image/login.png)
 
 ### **📊 Dashboard**
-![Dashboard](images/dashboard.png)
+![Dashboard](main/static/image/dashboard.png)
 
 ### **🚗 Vehicles**
-![Vehicles Page](images/vehicles.png)
+![Vehicles Page](main/static/image/vehicles.png)
 
 ### **🛣️ Trips Page**
-![Trips Page](images/trips.png)
+![Trips Page](main/static/image/trips.png)
 
 ### **🛠️ Maintenance Page**
-![Maintenance Page](images/maintainance.png)
+![Maintenance Page](main/static/image/maintainance.png)
 
 ### **💰 Expenses Page**
-![Expenses Page](images/expense.png)
+![Expenses Page](main/static/image/expense.png)
 
 ### **👨‍✈️ Drivers Page**
-![Drivers Page](images/driver.png)
+![Drivers Page](main/static/image/driver.png)
 
 ### **📊 Operational Analytics Page**
-![Analytics Page](images/analytics.png)
+![Analytics Page](main/static/image/analytics.png)
 
 
 
