@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- FLASH MESSAGES -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-warning alert-dismissible fade show mt-3 mx-auto" style="max-width:500px;" role="alert">
+      {{ messages[0] }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endif %}
+{% endwith %}
+<!-- PAGE TITLE -->
+<div class="text-center mt-4 mb-4">
+    <h2>Command Center</h2>
+    <p class="text-muted">High-level fleet oversight at a glance</p>
+</div>
+
+<!-- KPI CARDS -->
+<div class="row text-center mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card p-3 kpi-card">
+            <h5>Active Fleet</h5>
+            <h3>12</h3>
+            <small>Vehicles on trip</small>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card p-3 kpi-card">
+            <h5>Maintenance Alerts</h5>
+            <h3>3</h3>
+            <small>Vehicles in shop</small>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card p-3 kpi-card">
+            <h5>Utilization Rate</h5>
+            <h3>68%</h3>
+            <small>Assigned vs idle</small>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card p-3 kpi-card">
+            <h5>Pending Cargo</h5>
+            <h3>7</h3>
+            <small>Waiting assignments</small>
+        </div>
+    </div>
+</div>
+
+<!-- FILTERS -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <select class="form-select" id="vehicleType">
+            <option value="">All Vehicle Types</option>
+            <option>Truck</option>
+            <option>Van</option>
+            <option>Bike</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" id="status">
+            <option value="">All Statuses</option>
+            <option>On Trip</option>
+            <option>Idle</option>
+            <option>In Shop</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" id="region">
+            <option value="">All Regions</option>
+            <option>North</option>
+            <option>South</option>
+            <option>East</option>
+            <option>West</option>
+        </select>
+    </div>
+    <div class="col-md-3 text-end">
+        <button class="btn btn-orange" onclick="applyFilters()">Apply Filters</button>
+    </div>
+</div>
+
+<!-- FLEET TABLE -->
+<div class="table-responsive">
+    <table class="table table-striped table-hover" id="fleetTable">
+        <thead class="table-dark">
+            <tr>
+                <th>Vehicle ID</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Region</th>
+                <th>Driver</th>
+                <th>Last Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>V001</td>
+                <td>Truck</td>
+                <td>On Trip</td>
+                <td>North</td>
+                <td>John Doe</td>
+                <td>10:45 AM</td>
+            </tr>
+            <tr>
+                <td>V002</td>
+                <td>Van</td>
+                <td>Idle</td>
+                <td>South</td>
+                <td>Jane Smith</td>
+                <td>10:30 AM</td>
+            </tr>
+            <tr>
+                <td>V003</td>
+                <td>Bike</td>
+                <td>In Shop</td>
+                <td>East</td>
+                <td>Mike Brown</td>
+                <td>09:50 AM</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+<script>
+// ================= FILTER FUNCTION =================
+function applyFilters() {
+    const typeFilter = document.getElementById("vehicleType").value.toLowerCase();
+    const statusFilter = document.getElementById("status").value.toLowerCase();
+    const regionFilter = document.getElementById("region").value.toLowerCase();
+
+    const table = document.getElementById("fleetTable");
+    const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+    for (let row of rows) {
+        const type = row.cells[1].innerText.toLowerCase();
+        const status = row.cells[2].innerText.toLowerCase();
+        const region = row.cells[3].innerText.toLowerCase();
+
+        if ((type.includes(typeFilter) || typeFilter === "") &&
+            (status.includes(statusFilter) || statusFilter === "") &&
+            (region.includes(regionFilter) || regionFilter === "")) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    }
+}
+
+// Optional: Filter automatically when dropdown changes
+document.getElementById("vehicleType").addEventListener("change", applyFilters);
+document.getElementById("status").addEventListener("change", applyFilters);
+document.getElementById("region").addEventListener("change", applyFilters);
+</script>

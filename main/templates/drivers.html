@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Driver Performance | FleetFlow</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+  background: linear-gradient(to right,#fff5ec,#ffe5d0);
+}
+
+.navbar{
+  background:#fd7e14 !important;
+}
+
+.page-title{
+  color:#fd7e14;
+  font-weight:700;
+}
+
+.card-custom{
+  border-radius:15px;
+  transition:0.3s;
+}
+
+.card-custom:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.table thead{
+  background:#fff3e6;
+}
+
+.progress{
+  height:18px;
+}
+
+.progress-bar{
+  background:#fd7e14;
+}
+
+.status-select{
+  border:2px solid #fd7e14;
+}
+
+.expired-badge{
+  background:#dc3545;
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark shadow-sm">
+<div class="container-fluid">
+<a class="navbar-brand fw-bold text-white">
+<i class="fa fa-truck-moving me-2"></i>FleetFlow
+</a>
+</div>
+</nav>
+
+<div class="container my-5">
+
+<h2 class="page-title mb-4">
+<i class="fa fa-id-card me-2"></i>Driver Performance & Safety Profiles
+</h2>
+
+<div class="card card-custom shadow">
+<div class="card-body">
+
+<table class="table table-hover align-middle">
+<thead>
+<tr>
+<th>Driver</th>
+<th>License Expiry</th>
+<th>Completion Rate</th>
+<th>Safety Score</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody id="driverTableBody"></tbody>
+</table>
+
+</div>
+</div>
+</div>
+<script src="{{ url_for('static', filename='js/driver_profiles.js') }}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+const drivers = [
+  { name:"Alex", expiry:"2026-12-31", completion:92, safety:88, status:"On Duty" },
+  { name:"Maria", expiry:"2024-03-01", completion:75, safety:70, status:"Off Duty" },
+  { name:"John", expiry:"2023-01-10", completion:60, safety:55, status:"Suspended" }
+];
+
+const tbody = document.getElementById("driverTableBody");
+
+drivers.forEach(d => {
+
+  const expired = new Date(d.expiry) < new Date();
+
+  const row = document.createElement("tr");
+
+  row.innerHTML = `
+    <td><strong>${d.name}</strong></td>
+    <td>
+      ${d.expiry}
+      ${expired ? '<span class="badge expired-badge ms-2">Expired</span>' : ''}
+    </td>
+    <td>
+      <div class="progress">
+        <div class="progress-bar" style="width:${d.completion}%">
+          ${d.completion}%
+        </div>
+      </div>
+    </td>
+    <td>
+      <span class="badge ${d.safety > 75 ? 'bg-success' : 'bg-warning'}">
+        ${d.safety}
+      </span>
+    </td>
+    <td>
+      <select class="form-select status-select">
+        <option ${d.status=="On Duty"?"selected":""}>On Duty</option>
+        <option ${d.status=="Off Duty"?"selected":""}>Off Duty</option>
+        <option ${d.status=="Suspended"?"selected":""}>Suspended</option>
+      </select>
+    </td>
+  `;
+
+  tbody.appendChild(row);
+});
+
+});
+</script>
+
+</body>
+</html>

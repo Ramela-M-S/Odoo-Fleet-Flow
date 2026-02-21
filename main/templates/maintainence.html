@@ -1,0 +1,112 @@
+<!-- File: templates/maintenance.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FleetFlow Maintenance</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#fd7e14;">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="dashboard.html">
+        <i class="fa fa-truck-moving me-2"></i>FleetFlow
+      </a>
+      
+    </div>
+  </nav>
+  
+<!-- FLASH MESSAGES -->
+<!-- FLASH MESSAGES -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-warning alert-dismissible fade show mt-3 mx-auto" style="max-width:500px;" role="alert" id="flashMessage">
+      {{ messages[0] }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <script>
+      // Auto dismiss after 5 seconds
+      setTimeout(function() {
+        var alert = document.getElementById('flashMessage');
+        if (alert) {
+          // Bootstrap 5 way to dismiss alert
+          var bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+          bsAlert.close();
+        }
+      }, 5000);
+    </script>
+  {% endif %}
+{% endwith %}
+ 
+  <div class="container my-5">
+    <h2 class="mb-4 text-orange"><i class="fa fa-tools me-2"></i>Maintenance Logs</h2>
+
+    <!-- Form Card -->
+<div class="card shadow-sm p-4 mb-4">
+  <form method="POST" action="{{ url_for('add_maintenance') }}">
+    
+   <form method="POST" action="{{ url_for('add_maintenance') }}">
+    <!-- Vehicle Select (Yellow) -->
+    <div class="mb-3 input-group">
+        <span class="input-group-text bg-warning text-white">
+            <i class="fa fa-truck"></i>
+        </span>
+        <select name="vehicle" id="vehicleSelect" class="form-select" required>
+            <option value="">Choose Vehicle</option>
+            {% for vehicle in vehicles %}
+                <option value="{{ vehicle.id }}">
+                    {{ vehicle.name }} ({{ vehicle.license_plate }})
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    
+
+   
+</form>
+    <!-- Maintenance Details (Also Yellow) -->
+    <div class="mb-3 input-group">
+      <span class="input-group-text bg-warning text-white"><i class="fa fa-wrench"></i></span>
+      <textarea name="details" class="form-control" rows="3" placeholder="Enter maintenance details..." required></textarea>
+    </div>
+    
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-warning w-100 text-white">
+      <i class="fa fa-plus me-2"></i>Add Maintenance
+    </button>
+  </form>
+</div>
+
+    <!-- Table Card -->
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle text-center">
+            <thead class="table-light">
+              <tr>
+                <th>Vehicle</th>
+                <th>Details</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for log in maintenances %}
+                <tr>
+                  <td>{{ log.vehicle.name }} ({{ log.vehicle.license_plate }})</td>
+                  <td>{{ log.details }}</td>
+                  <td>{{ log.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

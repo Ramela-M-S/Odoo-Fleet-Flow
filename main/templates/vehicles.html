@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FleetFlow Vehicles</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  
+  <style>
+    /* Vertical animated line */
+    .vertical-line {
+      width: 4px;
+      height: 50px;
+      background: linear-gradient(to bottom, #fd7e14, #ffc107);
+      border-radius: 2px;
+      margin: 0 15px;
+      animation: slide 2s infinite alternate;
+    }
+    @keyframes slide {
+      0% { transform: scaleY(0.1); opacity: 0.2; }
+      50% { transform: scaleY(1); opacity: 0.7; }
+      100% { transform: scaleY(0.1); opacity: 0.2; }
+    }
+
+    /* Table hover effect */
+    table tbody tr:hover {
+      background-color: #fff3e0;
+      transition: 0.3s;
+    }
+
+    /* Vehicle icon styling */
+    .vehicle-icon {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      margin-right: 10px;
+    }
+
+    /* Action buttons */
+    .btn-action {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #fd7e14;">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" href="{{ url_for('dashboard') }}">FleetFlow</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link active text-white" href="{{ url_for('vehicles_page') }}">Vehicles</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('trips_page') }}">Trips</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('add_maintenance') }}">Maintenance</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('expenses_page') }}">Expenses</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- FLASH MESSAGES -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-warning alert-dismissible fade show mt-3 mx-auto" style="max-width:500px;" role="alert">
+      {{ messages[0] }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endif %}
+{% endwith %}
+
+  <!-- Main Container -->
+  <div class="container my-4">
+    <h2 class="mb-4" style="color: #fd7e14;">Vehicles</h2>
+    
+    <!-- Add Vehicle Button -->
+    <button class="btn" style="background-color:#fd7e14; color:white;" data-bs-toggle="modal" data-bs-target="#addVehicleModal">
+      <i class="fa fa-plus me-2"></i>Add Vehicle
+    </button>
+
+    <!-- Vehicles Table -->
+    <div class="table-responsive shadow-sm mt-3">
+      <table class="table table-hover align-middle text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Vehicle</th>
+            <th>License Plate</th>
+            <th>Max Load (kg)</th>
+            <th>Odometer (km)</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="vehicleTableBody">
+          {% for vehicle in vehicles %}
+          <tr>
+            <td class="d-flex align-items-center justify-content-center">
+              <img src="{{ url_for('static', filename='image/final.png') }}" class="vehicle-icon" alt="{{ vehicle.name }}">
+              {{ vehicle.name }}
+              <div class="vertical-line"></div>
+            </td>
+            <td>{{ vehicle.license_plate }}</td>
+            <td>{{ vehicle.max_load }}</td>
+            <td>{{ vehicle.odometer }}</td>
+            <td>
+              {% if vehicle.status == "Available" %}
+                <span class="badge bg-success">{{ vehicle.status }}</span>
+              {% elif vehicle.status == "In Shop" %}
+                <span class="badge bg-warning">{{ vehicle.status }}</span>
+              {% else %}
+                <span class="badge bg-danger">{{ vehicle.status }}</span>
+              {% endif %}
+            </td>
+            <td>
+              <button class="btn btn-sm" style="background-color:#fd7e14; color:white;"><i class="fa fa-edit"></i></button>
+              <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add Vehicle Modal -->
+  <div class="modal fade" id="addVehicleModal" tabindex="-1" aria-labelledby="addVehicleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#fd7e14; color:white;">
+          <h5 class="modal-title" id="addVehicleModalLabel"><i class="fa fa-plus me-2"></i>Add New Vehicle</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- POST form -->
+          <form id="vehicleForm" method="POST" action="{{ url_for('vehicles_page') }}">
+            <div class="mb-3">
+              <label for="vehicleName" class="form-label">Name/Model</label>
+              <input type="text" class="form-control" name="vehicleName" id="vehicleName" placeholder="Enter vehicle name/model" required>
+            </div>
+            <div class="mb-3">
+              <label for="licensePlate" class="form-label">License Plate</label>
+              <input type="text" class="form-control" name="licensePlate" id="licensePlate" placeholder="Enter license plate" required>
+            </div>
+            <div class="mb-3">
+              <label for="maxLoad" class="form-label">Max Load (kg)</label>
+              <input type="number" class="form-control" name="maxLoad" id="maxLoad" placeholder="Enter max load" required>
+            </div>
+            <div class="mb-3">
+              <label for="odometer" class="form-label">Odometer (km)</label>
+              <input type="number" class="form-control" name="odometer" id="odometer" placeholder="Enter odometer reading" required>
+            </div>
+            <div class="mb-3">
+              <label for="vehicleStatus" class="form-label">Status</label>
+              <select class="form-select" name="vehicleStatus" id="vehicleStatus" required>
+                <option value="Available">Available</option>
+                <option value="In Shop">In Shop</option>
+                <option value="Retired">Retired</option>
+              </select>
+            </div>
+            <button type="submit" class="btn w-100" style="background-color:#fd7e14; color:white;"><i class="fa fa-check me-2"></i>Add Vehicle</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Font Awesome JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+</body>
+</html>

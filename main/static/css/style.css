@@ -1,0 +1,254 @@
+/* ================= GLOBAL ================= */
+body{
+    font-family: 'Segoe UI', sans-serif;
+    background:#fff7f0;
+}
+
+/* ================= NAVBAR ================= */
+.navbar{
+    background:#ff7a00;
+    padding:15px 40px;
+}
+
+.navbar-brand{
+    color:white !important;
+    font-size:22px;
+    font-weight:700;
+}
+
+.nav-link{
+    color:white !important;
+    margin-left:20px;
+    font-weight:500;
+}
+
+/* ================= HERO ================= */
+.hero{
+    height:260px;
+    background:url("https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d") center/cover no-repeat;
+    position:relative;
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+}
+
+.hero-text{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    color:white;
+    text-align:center;
+}
+
+.hero-text h1{
+    font-size:32px;
+    font-weight:700;
+}
+
+/* ================= CARD SECTION ================= */
+.action-section{
+    margin-top:60px;   /* move down */
+}
+
+/* glass card */
+.action-card{
+    max-width:480px;
+    margin:auto;
+    padding:45px;
+    border-radius:20px;
+    backdrop-filter: blur(14px);
+    background:rgba(255,255,255,0.75);
+    border:1px solid rgba(255,255,255,0.4);
+    box-shadow:0 20px 50px rgba(0,0,0,0.15);
+    text-align:center;
+    animation: floatCard 4s ease-in-out infinite;
+}
+
+@keyframes floatCard{
+    0%{ transform:translateY(0px);}
+    50%{ transform:translateY(-10px);}
+    100%{ transform:translateY(0px);}
+}
+
+.action-card h2{
+    color:#ff7a00;
+    font-weight:700;
+}
+
+/* buttons */
+.btn-orange{
+    background:#ff7a00;
+    color:white;
+    font-weight:600;
+}
+
+.btn-orange:hover{
+    background:#e56700;
+    color:white;
+}
+
+/* role buttons */
+.role-btn{
+    border-radius:12px;
+    padding:10px;
+    margin:5px;
+    border:2px solid #ff7a00;
+    background:white;
+    font-weight:600;
+}
+
+.role-btn:hover{
+    background:#ff7a00;
+    color:white;
+}
+
+.login-card{
+    padding:35px;
+    border-radius:18px;
+    background:white;
+    box-shadow:0 15px 40px rgba(0,0,0,0.1);
+}
+
+.card-title{
+    text-align:center;
+    font-weight:700;
+    color:#ff7a00;
+    margin-bottom:25px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.role-options{
+    display:flex;
+    gap:15px;
+}
+
+.role-item{
+    border:2px solid #ff7a00;
+    padding:10px 18px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.role-item input{
+    margin-right:6px;
+}
+
+.password-box{
+    position:relative;
+}
+
+.toggle-password{
+    position:absolute;
+    right:12px;
+    top:8px;
+    cursor:pointer;
+}
+
+.hint{
+    color:gray;
+}
+
+.login-options{
+    display:flex;
+    justify-content:space-between;
+    margin:15px 0;
+}
+
+.forgot-link{
+    color:#ff7a00;
+    text-decoration:none;
+}
+
+.btn-login{
+    width:100%;
+    background:#ff7a00;
+    color:white;
+    border:none;
+    padding:12px;
+    border-radius:10px;
+    font-weight:600;
+}
+
+.btn-login:hover{
+    background:#e56700;
+}
+
+.security-note{
+    text-align:center;
+    margin-top:15px;
+    font-size:13px;
+    color:gray;
+}
+
+.system-features{
+    margin-top:15px;
+    font-size:14px;
+}
+
+/* ================= FOOTER ================= */
+footer{
+    background:#ff7a00;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.modal-content{
+    border-radius:15px;
+    border:none;
+}
+
+.form-check-input:checked{
+    background-color:#ff7a00;
+    border-color:#ff7a00;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    margin-top: -20px; /* Move the card up */
+    margin-bottom: 20px;
+}
+/* KPI Cards */
+.kpi-card {
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    background: #fff;
+    transition: transform 0.2s;
+}
+
+.kpi-card:hover {
+    transform: translateY(-5px);
+}
+
+.kpi-card h5 {
+    font-weight: 600;
+    color: #ff7a00;
+}
+
+.kpi-card h3 {
+    font-weight: 700;
+    margin: 10px 0;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h5 {
+    font-weight: 600;
+    color: #ff7a00;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    font-weight: 700;
+}

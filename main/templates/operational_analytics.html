@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analytics | FleetFlow</title>
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+/* Body & Background */
+body {
+  background: linear-gradient(to right,#fff5ec,#ffe5d0);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  background: #fd7e14 !important;
+}
+
+/* Page title */
+.page-title {
+  color: #fd7e14;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+/* KPI Cards */
+.kpi-card {
+  border-radius: 15px;
+  transition: 0.3s;
+  padding: 2rem 1rem;
+}
+.kpi-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+.kpi-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fd7e14;
+  margin-top: 0.5rem;
+}
+
+/* Export Button */
+.export-btn {
+  background: #fd7e14;
+  border: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.export-btn:hover {
+  background: #e66b00;
+}
+
+/* Chart Containers */
+.chart-container {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  width: 100%;
+  height: 400px;
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-dark shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-white">
+      <i class="fa fa-chart-line me-2"></i>FleetFlow
+    </a>
+  </div>
+</nav>
+
+<!-- Main Container -->
+<div class="container my-5">
+
+<h2 class="page-title mb-4">
+  <i class="fa fa-chart-pie me-2"></i>Operational Analytics & Financial Reports
+</h2>
+
+<!-- KPI Cards -->
+<div class="row g-4 mb-5">
+  <div class="col-md-4">
+    <div class="card kpi-card shadow text-center">
+      <h6>Fuel Efficiency</h6>
+      <div id="fuel" class="kpi-value">--</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card kpi-card shadow text-center">
+      <h6>Vehicle ROI</h6>
+      <div id="roi" class="kpi-value">--</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card kpi-card shadow text-center">
+      <h6>Total Revenue</h6>
+      <div id="revenue" class="kpi-value">--</div>
+    </div>
+  </div>
+</div>
+
+<!-- Charts Section -->
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="chart-container">
+      <h6 class="text-center mb-3">Expense Breakdown</h6>
+      <canvas id="expenseChart"></canvas>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="chart-container">
+      <h6 class="text-center mb-3">Financial Overview</h6>
+      <canvas id="roiChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Export Button -->
+<div class="text-end mt-5">
+  <button class="btn export-btn text-white px-4 py-2" onclick="exportCSV()">
+    <i class="fa fa-file-csv me-2"></i>Export Report
+  </button>
+</div>
+
+</div>
+
+<!-- JS -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Sample Data
+  const km = 15000;
+  const fuelUsed = 1000;
+  const revenue = 500000;
+  const maintenance = 80000;
+  const fuelCost = 120000;
+  const acquisition = 700000;
+
+  // KPI Calculations
+  const efficiency = (km / fuelUsed).toFixed(2);
+  const roi = ((revenue - (maintenance + fuelCost)) / acquisition * 100).toFixed(2);
+
+  document.getElementById("fuel").innerText = efficiency + " km/L";
+  document.getElementById("roi").innerText = roi + " %";
+  document.getElementById("revenue").innerText = "₹ " + revenue.toLocaleString();
+
+  // Doughnut Chart - Expense Breakdown
+  new Chart(document.getElementById("expenseChart"), {
+    type: 'doughnut',
+    data: {
+      labels: ['Fuel Cost', 'Maintenance'],
+      datasets: [{
+        data: [fuelCost, maintenance],
+        backgroundColor: ['#fd7e14', '#ffc107'],
+        borderColor: '#fff',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            color: '#333',
+            font: { size: 14 }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.label + ": ₹" + context.raw.toLocaleString();
+            }
+          }
+        }
+      },
+      layout: {
+        padding: { top:10, bottom:10, left:10, right:10 }
+      }
+    }
+  });
+
+  // Bar Chart - Revenue vs Total Costs
+  new Chart(document.getElementById("roiChart"), {
+    type: 'bar',
+    data: {
+      labels: ['Revenue', 'Total Costs'],
+      datasets: [{
+        label: 'Amount (₹)',
+        data: [revenue, maintenance + fuelCost],
+        backgroundColor: ['#fd7e14', '#6c757d'],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return "₹ " + context.raw.toLocaleString();
+            }
+          }
+        }
+      },
+      layout: { padding: { top:10, bottom:10, left:10, right:10 } },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { callback: value => '₹ ' + value.toLocaleString() }
+        },
+        x: { ticks: { font: { size: 14 } } }
+      }
+    }
+  });
+});
+
+// Export CSV Function
+function exportCSV() {
+  alert("Report exported successfully!");
+}
+</script>
+</body>
+</html>

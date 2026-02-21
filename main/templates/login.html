@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- FLASH MESSAGES -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-warning alert-dismissible fade show mt-3 mx-auto" style="max-width:500px;" role="alert">
+      {{ messages[0] }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- LOGIN CARD -->
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card p-4 login-card">
+
+            <h4 class="card-title text-center">Login</h4>
+
+            <form method="POST" action="{{ url_for('login') }}">
+                <!-- ROLE SELECTION -->
+                <div class="mb-3">
+                    <label class="fw-bold mb-2">Select Role</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" value="manager" required>
+                        <label class="form-check-label">Manager</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" value="dispatcher">
+                        <label class="form-check-label">Dispatcher</label>
+                    </div>
+                </div>
+
+                <!-- EMAIL -->
+                <div class="mb-3">
+                    <label>Email Address</label>
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="mb-3">
+                    <label>Password</label>
+                    <div class="password-box">
+                        <input type="password" name="password" class="form-control" id="passwordField" placeholder="Enter password" required>
+                        <span class="toggle-password" onclick="togglePassword()">👁</span>
+                    </div>
+                    <small class="hint">Minimum 8 characters required</small>
+                </div>
+
+                <button class="btn btn-orange w-100 btn-login" type="submit">Login</button>
+            </form>
+
+            <!-- Forgot Password Link -->
+            <div class="mt-3 text-end">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" class="small text-warning">Forgot Password?</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ================= FORGOT PASSWORD MODAL ================= -->
+<div class="modal fade" id="forgotPasswordModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <h5 class="text-center text-warning mb-3">Reset Your Password</h5>
+      <p class="text-center">Enter your email address to receive password reset instructions.</p>
+      <form method="POST" action="{{ url_for('forgot_password') }}">
+        <input type="email" name="email" class="form-control mb-3" placeholder="Enter your email" required>
+        <button class="btn btn-orange w-100" type="submit">Send Reset Link</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- PASSWORD TOGGLE SCRIPT -->
+<script>
+function togglePassword() {
+  const passwordField = document.getElementById("passwordField");
+  passwordField.type = passwordField.type === "password" ? "text" : "password";
+}
+</script>
+
+{% endblock %}
