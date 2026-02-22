@@ -124,13 +124,14 @@ This improves operational efficiency, reduces downtime, and supports better deci
 
 ## 🎥 Demo Video
 
-https://drive.google.com/file/d/1BY57J8cblNXr56wOnTeDrGAKJFmQhbBe/view?usp=drivesdk
+[Video Drive Link](https://drive.google.com/file/d/1BY57J8cblNXr56wOnTeDrGAKJFmQhbBe/view?usp=drivesdk)
 
 ## 🛠️ Installation
 
 ### 1️⃣ Clone the repository
 
-git clone https://github.com/Ramela-M-S/fleetflow.git
+git clone [https://github.com/Ramela-M-S/fleetflow.git](https://github.com/Ramela-M-S/Odoo-Fleet-Flow/)
+
 cd fleetflow
 
 ### 2️⃣ Create virtual environment
