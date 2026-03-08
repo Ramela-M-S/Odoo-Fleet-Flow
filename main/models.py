@@ -31,8 +31,8 @@ class Driver(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     license_expiry = db.Column(db.Date, nullable=False)
-    completion_rate = db.Column(db.Integer, default=0)  # 0-100 %
-    safety_score = db.Column(db.Integer, default=0)      # 0-100 %
+    completion_rate = db.Column(db.Integer, default=0) 
+    safety_score = db.Column(db.Integer, default=0)    
     status = db.Column(db.String(20), default="On Duty") 
     
     

@@ -1,10 +1,10 @@
-/* ================= GLOBAL ================= */
+
 body{
     font-family: 'Segoe UI', sans-serif;
     background:#fff7f0;
 }
 
-/* ================= NAVBAR ================= */
+
 .navbar{
     background:#ff7a00;
     padding:15px 40px;
@@ -22,7 +22,7 @@ body{
     font-weight:500;
 }
 
-/* ================= HERO ================= */
+
 .hero{
     height:260px;
     background:url("https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d") center/cover no-repeat;
@@ -50,12 +50,10 @@ body{
     font-weight:700;
 }
 
-/* ================= CARD SECTION ================= */
 .action-section{
-    margin-top:60px;   /* move down */
+    margin-top:60px;   
 }
 
-/* glass card */
 .action-card{
     max-width:480px;
     margin:auto;
@@ -80,7 +78,6 @@ body{
     font-weight:700;
 }
 
-/* buttons */
 .btn-orange{
     background:#ff7a00;
     color:white;
@@ -193,7 +190,7 @@ body{
     font-size:14px;
 }
 
-/* ================= FOOTER ================= */
+
 footer{
     background:#ff7a00;
     color:white;
@@ -218,7 +215,7 @@ footer{
     margin-top: -20px; /* Move the card up */
     margin-bottom: 20px;
 }
-/* KPI Cards */
+
 .kpi-card {
     border-radius: 15px;
     box-shadow: 0 15px 30px rgba(0,0,0,0.1);

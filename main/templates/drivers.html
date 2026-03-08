@@ -55,14 +55,27 @@ body{
 </head>
 
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <span class="navbar-brand">🚛 FleetFlow Logistics</span>
 
-<nav class="navbar navbar-dark shadow-sm">
-<div class="container-fluid">
-<a class="navbar-brand fw-bold text-white">
-<i class="fa fa-truck-moving me-2"></i>FleetFlow
-</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="menu">
+  <ul class="navbar-nav">
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('vehicles_page') }}">Fleet</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('trips_page') }}">Trips</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('maintenance_page') }}">Maintenance</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('expenses_page') }}">Completed Trips</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('drivers_page') }}">Drivers</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('operational_analytics') }}">Finance</a></li>
+  </ul>
 </div>
-</nav>
+    </div>
+  </nav>
 
 <div class="container my-5">
 

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- FLASH MESSAGES -->
+
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <div class="alert alert-warning alert-dismissible fade show mt-3 mx-auto" style="max-width:500px;" role="alert">
@@ -10,13 +10,13 @@
     </div>
   {% endif %}
 {% endwith %}
-<!-- PAGE TITLE -->
+
 <div class="text-center mt-4 mb-4">
     <h2>Command Center</h2>
     <p class="text-muted">High-level fleet oversight at a glance</p>
 </div>
 
-<!-- KPI CARDS -->
+
 <div class="row text-center mb-4">
     <div class="col-md-3 mb-3">
         <div class="card p-3 kpi-card">
@@ -48,7 +48,7 @@
     </div>
 </div>
 
-<!-- FILTERS -->
+
 <div class="row mb-4">
     <div class="col-md-3">
         <select class="form-select" id="vehicleType">
@@ -80,7 +80,7 @@
     </div>
 </div>
 
-<!-- FLEET TABLE -->
+
 <div class="table-responsive">
     <table class="table table-striped table-hover" id="fleetTable">
         <thead class="table-dark">
@@ -125,7 +125,7 @@
 {% endblock %}
 
 <script>
-// ================= FILTER FUNCTION =================
+
 function applyFilters() {
     const typeFilter = document.getElementById("vehicleType").value.toLowerCase();
     const statusFilter = document.getElementById("status").value.toLowerCase();
@@ -149,7 +149,7 @@ function applyFilters() {
     }
 }
 
-// Optional: Filter automatically when dropdown changes
+
 document.getElementById("vehicleType").addEventListener("change", applyFilters);
 document.getElementById("status").addEventListener("change", applyFilters);
 document.getElementById("region").addEventListener("change", applyFilters);

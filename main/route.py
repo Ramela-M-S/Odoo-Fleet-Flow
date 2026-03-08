@@ -1,34 +1,27 @@
-# main/routes.py
+
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from main.extensions import db
 from main.models import Vehicle, Trip, Maintenance, Expense, Driver
 from datetime import datetime
 
-# Sample users (for prototype)
+
 users = {
     "manager@example.com": {"password": "manager123", "role": "Manager"},
     "dispatcher@example.com": {"password": "dispatcher123", "role": "Dispatcher"}
 }
 
-# -----------------------
-# Home Route
-# -----------------------
+
 def home():
     return redirect(url_for("login"))
 
-# -----------------------
-# Dashboard Route
-# -----------------------
 def dashboard():
     if "user" not in session:
         flash("Please login first!")
         return redirect(url_for("login"))
     return render_template("dashboard.html")
 
-# -----------------------
-# Login & Logout Routes
-# -----------------------
+
 def login():
     if request.method == "POST":
         email = request.form.get("email")
@@ -58,9 +51,6 @@ def logout():
     return redirect(url_for("login"))
 
 
-# -----------------------
-# Vehicles Routes
-# -----------------------
 def vehicles_page():
     if "user" not in session:
         flash("Please login first!")
@@ -93,9 +83,6 @@ def vehicles_page():
     return render_template("vehicles.html", vehicles=vehicles)
 
 
-# -----------------------
-# Trips Routes
-# -----------------------
 def trips_page():
     vehicles = Vehicle.query.all()
     drivers = ["Alex", "Maria", "John", "Sara"]  # static list for now
@@ -141,9 +128,6 @@ def add_trip():
     return redirect(url_for("trips_page"))
 
 
-# -----------------------
-# Maintenance Routes
-# -----------------------
 def maintenance_page():
     # Fetch vehicles that are available (not in maintenance)
     vehicles = Vehicle.query.filter(Vehicle.status != "In Shop").all()
@@ -161,18 +145,18 @@ def add_maintenance():
     vehicle_id = request.form.get("vehicle")
     details = request.form.get("details")
 
-    # Check if vehicle exists
+    
     vehicle = Vehicle.query.get(vehicle_id)
     if not vehicle:
         flash("Vehicle not found!", "danger")
         return redirect(url_for("maintenance_page"))
 
-    # Prevent adding maintenance for a vehicle already in shop
+   
     if vehicle.status == "In Shop":
         flash(f"{vehicle.name} is already in maintenance!", "warning")
         return redirect(url_for("maintenance_page"))
 
-    # Add maintenance log
+    
     maintenance = Maintenance(
         vehicle_id=vehicle.id,
         details=details,
@@ -180,16 +164,14 @@ def add_maintenance():
     )
     db.session.add(maintenance)
 
-    # Update vehicle status
+    
     vehicle.status = "In Shop"
     db.session.commit()
 
     flash(f"Maintenance log added for {vehicle.name}", "success")
     return redirect(url_for("maintenance_page"))
 
-# -----------------------
-# Expenses Routes
-# -----------------------
+
 def expenses_page():
     vehicles = Vehicle.query.all()
     expenses = Expense.query.order_by(Expense.created_at.desc()).all()
@@ -211,9 +193,7 @@ def add_expense():
     return redirect(url_for('expenses_page'))
 
 
-# -----------------------
-# Drivers Routes
-# -----------------------
+
 def drivers_page():
     if request.method == "POST":
         driver_id = request.form.get("driver_id")
@@ -229,16 +209,10 @@ def drivers_page():
     return render_template("drivers.html", drivers=drivers, now=datetime.now())
 
 
-# -----------------------
-# Operational Analytics Route
-# -----------------------
 def operational_analytics():
     return render_template("operational_analytics.html")
 
 
-# -----------------------
-# Forgot Password Route
-# -----------------------
 def forgot_password():
     email = request.form.get("email")
     if email in users:
@@ -248,9 +222,6 @@ def forgot_password():
     return redirect(url_for("login"))
 
 
-# -----------------------
-# Function to register routes with app
-# -----------------------
 def register_routes(app: Flask):
     app.add_url_rule("/", "home", home)
     app.add_url_rule("/dashboard", "dashboard", dashboard)

@@ -39,7 +39,7 @@
     </ul>
   </div>
 </nav>
-<!-- FLASH MESSAGES -->
+
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <div class="alert alert-warning alert-dismissible fade show mt-3 mx-auto" style="max-width:500px;" role="alert" id="flashMessage">
@@ -48,11 +48,11 @@
     </div>
 
     <script>
-      // Auto dismiss after 5 seconds
+      
       setTimeout(function() {
         var alert = document.getElementById('flashMessage');
         if (alert) {
-          // Bootstrap 5 way to dismiss alert
+          
           var bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
           bsAlert.close();
         }
@@ -63,7 +63,7 @@
 <div class="container my-5">
   <h2 class="page-title mb-4"><i class="fa fa-wallet me-2"></i>Expense Logging</h2>
 
-  <!-- Expense Form -->
+
   <div class="card card-custom shadow p-4 mb-4">
     <form method="POST" action="{{ url_for('add_expense') }}">
       <div class="mb-3 input-group">
@@ -93,7 +93,7 @@
     </form>
   </div>
 
-  <!-- Expenses Table -->
+  
   <div class="card card-custom shadow">
     <div class="card-body">
       <h5 class="card-title">Logged Expenses</h5>

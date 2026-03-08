@@ -5,33 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Analytics | FleetFlow</title>
 
-<!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Font Awesome -->
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<!-- Chart.js -->
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-/* Body & Background */
+
 body {
   background: linear-gradient(to right,#fff5ec,#ffe5d0);
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* Navbar */
+
 .navbar {
   background: #fd7e14 !important;
 }
 
-/* Page title */
+
 .page-title {
   color: #fd7e14;
   font-weight: 700;
   font-size: 1.8rem;
 }
 
-/* KPI Cards */
+
 .kpi-card {
   border-radius: 15px;
   transition: 0.3s;
@@ -48,7 +47,7 @@ body {
   margin-top: 0.5rem;
 }
 
-/* Export Button */
+
 .export-btn {
   background: #fd7e14;
   border: none;
@@ -59,7 +58,7 @@ body {
   background: #e66b00;
 }
 
-/* Chart Containers */
+
 .chart-container {
   background: white;
   padding: 20px;
@@ -78,23 +77,37 @@ body {
 
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-dark shadow-sm">
-  <div class="container-fluid">
-    <a class="navbar-brand fw-bold text-white">
-      <i class="fa fa-chart-line me-2"></i>FleetFlow
-    </a>
-  </div>
-</nav>
 
-<!-- Main Container -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <span class="navbar-brand">🚛 FleetFlow Logistics</span>
+
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="menu">
+  <ul class="navbar-nav">
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('vehicles_page') }}">Fleet</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('trips_page') }}">Trips</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('maintenance_page') }}">Maintenance</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('expenses_page') }}">Completed Trips</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('drivers_page') }}">Drivers</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('operational_analytics') }}">Finance</a></li>
+  </ul>
+</div>
+    </div>
+  </nav>
+
+
 <div class="container my-5">
 
 <h2 class="page-title mb-4">
   <i class="fa fa-chart-pie me-2"></i>Operational Analytics & Financial Reports
 </h2>
 
-<!-- KPI Cards -->
+
 <div class="row g-4 mb-5">
   <div class="col-md-4">
     <div class="card kpi-card shadow text-center">
@@ -116,7 +129,7 @@ body {
   </div>
 </div>
 
-<!-- Charts Section -->
+
 <div class="row g-4">
   <div class="col-md-6">
     <div class="chart-container">
@@ -132,7 +145,7 @@ body {
   </div>
 </div>
 
-<!-- Export Button -->
+
 <div class="text-end mt-5">
   <button class="btn export-btn text-white px-4 py-2" onclick="exportCSV()">
     <i class="fa fa-file-csv me-2"></i>Export Report
@@ -141,10 +154,10 @@ body {
 
 </div>
 
-<!-- JS -->
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Sample Data
+  
   const km = 15000;
   const fuelUsed = 1000;
   const revenue = 500000;
@@ -152,7 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const fuelCost = 120000;
   const acquisition = 700000;
 
-  // KPI Calculations
   const efficiency = (km / fuelUsed).toFixed(2);
   const roi = ((revenue - (maintenance + fuelCost)) / acquisition * 100).toFixed(2);
 
@@ -160,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("roi").innerText = roi + " %";
   document.getElementById("revenue").innerText = "₹ " + revenue.toLocaleString();
 
-  // Doughnut Chart - Expense Breakdown
+ 
   new Chart(document.getElementById("expenseChart"), {
     type: 'doughnut',
     data: {
@@ -197,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Bar Chart - Revenue vs Total Costs
+  
   new Chart(document.getElementById("roiChart"), {
     type: 'bar',
     data: {
@@ -234,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Export CSV Function
+
 function exportCSV() {
   alert("Report exported successfully!");
 }

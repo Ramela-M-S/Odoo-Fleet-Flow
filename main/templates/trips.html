@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FleetFlow Trips</title>
   
-  <!-- Bootstrap CSS -->
+ 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   
-  <!-- Font Awesome for icons -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
-  <!-- Custom CSS -->
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 
   <style>
-    /* Navbar theme */
+  
     .navbar {
       background-color: #fd7e14 !important;
     }
@@ -24,13 +24,13 @@
       text-decoration: underline;
     }
 
-    /* Card headers */
+   
     .card-title {
       color: #fd7e14;
       font-weight: bold;
     }
 
-    /* Buttons */
+   
     .btn-primary {
       background-color: #fd7e14;
       border-color: #fd7e14;
@@ -41,35 +41,41 @@
       color: #000;
     }
 
-    /* Table hover effect */
+   
     table tbody tr:hover {
       background-color: #fff3e0;
       transition: 0.3s;
     }
 
-    /* Input group icons */
+    
     .input-group-text {
       border: none;
     }
   </style>
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand text-white" href="{{ url_for('dashboard') }}">FleetFlow</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('dashboard') }}">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('vehicles_page') }}">Vehicles</a></li>
-          <li class="nav-item"><a class="nav-link active text-white" href="{{ url_for('trips_page') }}">Trips</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('maintenance_page') }}">Maintenance</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('expenses_page') }}">Expenses</a></li>
-        </ul>
-      </div>
+      <span class="navbar-brand">🚛 FleetFlow Logistics</span>
+
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="menu">
+  <ul class="navbar-nav">
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('vehicles_page') }}">Fleet</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('trips_page') }}">Trips</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('maintenance_page') }}">Maintenance</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('expenses_page') }}">Completed Trips</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('drivers_page') }}">Drivers</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('operational_analytics') }}">Finance</a></li>
+  </ul>
+</div>
     </div>
   </nav>
-<!-- FLASH MESSAGES -->
+
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <div class="alert alert-warning alert-dismissible fade show mt-3 mx-auto" style="max-width:500px;" role="alert">
@@ -78,12 +84,11 @@
     </div>
   {% endif %}
 {% endwith %}
-  <!-- Main Container -->
+ 
   <div class="container my-5">
     <h2 class="mb-4" style="color:#fd7e14;">Trip Dispatcher & Management</h2>
    
 
-    <!-- Trip Assignment Form -->
     <div class="card shadow-sm p-4 mb-5">
       <h5 class="card-title">Assign a Trip</h5>
       <form id="tripForm" method="POST" action="{{ url_for('add_trip') }}">
@@ -98,7 +103,7 @@
           </select>
         </div>
 
-        <!-- Driver Select -->
+        
         <div class="mb-3 input-group">
           <span class="input-group-text bg-success text-white"><i class="fa fa-user"></i></span>
           <select name="driver" id="driverSelect" class="form-select" required>
@@ -109,7 +114,7 @@
           </select>
         </div>
 
-        <!-- Cargo Weight -->
+      
         <div class="mb-3 input-group">
           <span class="input-group-text bg-primary text-white"><i class="fa fa-box"></i></span>
           <input type="number" name="cargo_weight" id="cargoWeight" class="form-control" placeholder="Cargo Weight (kg)" min="0" required />
@@ -122,7 +127,7 @@
     </div>
     <div class="container my-5">
 
-  <!-- Assigned Trips Table -->
+  
   <div class="card mt-3 shadow-sm">
     <div class="card-body">
       <h5 class="card-title">Assigned Trips</h5>
@@ -158,7 +163,7 @@
     
   </div>
 
-  <!-- Bootstrap & Font Awesome JS -->
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
   <!-- Custom JS -->
