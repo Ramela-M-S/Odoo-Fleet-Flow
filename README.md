@@ -130,7 +130,7 @@ This improves operational efficiency, reduces downtime, and supports better deci
 
 ### 1️⃣ Clone the repository
 
-git clone [https://github.com/Ramela-M-S/fleetflow.git](https://github.com/Ramela-M-S/Odoo-Fleet-Flow/)
+git clone [git clone https://github.com/Ramela-M-S/Odoo-Fleet-Flow](https://github.com/Ramela-M-S/Odoo-Fleet-Flow/)
 
 cd fleetflow
 
